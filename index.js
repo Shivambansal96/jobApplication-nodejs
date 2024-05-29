@@ -1,7 +1,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose')
-const dotenv = require('./routes/job')
+const dotenv = require('dotenv')
 
 const jobRoutes = require("./routes/job")
 
