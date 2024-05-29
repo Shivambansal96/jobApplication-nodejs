@@ -1,19 +1,19 @@
 
 const express = require('express');
 const mongoose = require('mongoose')
+const dotenv = require('./routes/job')
 
 const jobRoutes = require("./routes/job")
 
 const app = express();
 
+dotenv.config();
+
 app.use(express.json());
 
+
 mongoose
-.connect('mongodb+srv://Shivambansal96:tp5ijvPgxgVMqPcT@jobappnode.papboty.mongodb.net/')
-
-    // username: Shivambansal96
-    // password: tp5ijvPgxgVMqPcT
-
+.connect(process.env.DB_URL)
 .then(() => {
     console.log("Connected to the DataBase");
 })
