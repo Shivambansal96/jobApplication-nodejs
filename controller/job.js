@@ -4,45 +4,70 @@ const JobModel = require('../models/job')
 
 const createJob = async(req, res) => {
     console.log(req.body);
-
-    const jobObj = req.body;
-    const newJob = new JobModel(jobObj);
-    const newlyAddedJob = await newJob.save();
-
     
-    res.json({
-        success:true,
-        msg: 'Created Job Api',
-        jobID: newlyAddedJob.id
-    })
+    try {
+    
+        const jobObj = req.body;
+        const newJob = new JobModel(jobObj);
+        const newlyAddedJob = await newJob.save();
+        
+        res.json({
+            success:true,
+            msg: 'Created Job Api',
+            jobID: newlyAddedJob.id
+        })
+        
+    } catch (err) {
+        // console.log(err);
+        res.json({
+            success: false,
+            msg: 'Try Catch Error'
+        })
+    }
+
 }
+
 
 const listJob = async(req, res) => {
 
-    const minSalary = req.query.minSalary;
-    const maxSalary = req.query.maxSalary;
 
-    const readJobs = await JobModel.find({
-        $and: [{
+    try {
+        
+        const minSalary = req.query.minSalary;
+        const maxSalary = req.query.maxSalary;
+        
+        const readJobs = await JobModel.find({
+            $and: [{
+                
+                salary: {
+                    $gte : minSalary,
+                    $lte : maxSalary
+                }
+                // salary: { $gte: minSalary }, salary: { $lte: maxSalary }
+            }]
+        })
+        
+        res.json({
+            success:true,
+            msg: 'Listed all Jobs',
+            results: readJobs
+            
+        })
 
-            salary: {
-                $gte : minSalary,
-                $lte : maxSalary
-            }
-            // salary: { $gte: minSalary }, salary: { $lte: maxSalary }
-        }]
-    })
-
-    res.json({
-        success:true,
-        msg: 'Listed all Jobs',
-        results: readJobs
-
-    })
+    } catch (err) {
+        // console.log(err);
+        res.json({
+            success: false,
+            msg: 'Try Catch Error'
+        })
+    }
 }
 
 const editJob = async(req, res) => {
-const jobId = req.params.id;
+
+    try {
+
+    const jobId = req.params.id;
 
 // JobModel.findByIdAndUpdate(the object searching for, Obect to update)   { only for id } 
 await JobModel.findByIdAndUpdate(jobId, req.body)     // you need to make changes while in post METHOD
@@ -68,9 +93,20 @@ await JobModel.updateMany(findObj, updateObj)
         success:true,
         msg: 'Edited Job Api'
     })
+
+} catch (err) {
+    // console.log(err);
+    res.json({
+        success: false,
+        msg: 'Try Catch Error'
+    })
+}
 }
 
 const deleteJob = async(req, res) => {
+
+    try {
+        
     const jobId = req.params.id;
 
     await JobModel.findByIdAndDelete(jobId)
@@ -84,6 +120,17 @@ const deleteJob = async(req, res) => {
         success:true,
         msg: 'Delete Job Api'
     })
+
+} catch (err) {
+    res.json({
+        success: false,
+        msg: 'Try Catch Error'
+    })
+}
+
+
+
+
 }
 
 

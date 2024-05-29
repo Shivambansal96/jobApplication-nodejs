@@ -9,7 +9,11 @@ const app = express();
 app.use(express.json());
 
 mongoose
-.connect('mongodb://localhost:27017/jobapp')
+.connect('mongodb+srv://Shivambansal96:tp5ijvPgxgVMqPcT@jobappnode.papboty.mongodb.net/')
+
+    // username: Shivambansal96
+    // password: tp5ijvPgxgVMqPcT
+
 .then(() => {
     console.log("Connected to the DataBase");
 })
