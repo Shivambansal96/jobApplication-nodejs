@@ -23,8 +23,8 @@ mongoose
 
 app.use(jobRoutes)
 
-app.listen(8008, () => {
-    console.log('Server is runnning at port 8008')
+app.listen(10000, () => {
+    console.log('Server is runnning at port 10000')
 });
 
 

@@ -128,9 +128,6 @@ const deleteJob = async(req, res) => {
     })
 }
 
-
-
-
 }
 
 
